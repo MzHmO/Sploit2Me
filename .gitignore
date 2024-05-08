@@ -1,0 +1,5 @@
+database
+__pycache__
+.idea
+.vscode
+vullist_temp.xlsx
