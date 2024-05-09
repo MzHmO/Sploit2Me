@@ -1,11 +1,13 @@
+import pandas as pd
+import logging
 import requests
+import config
+from botnotify.tg import BotService
 from requests.packages import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-import pandas as pd
-import logging
+
 from time import sleep
-import config
 
 
 class HttpService:
@@ -64,6 +66,7 @@ class Parser:
             local_latest_id = Parser.extract_numeric_value(latest_record[0])
 
             if local_latest_id > Parser.latest_id:
+                Parser.latest_id = local_latest_id
                 logging.debug(f"[*] Found new vulnerability {latest_record[0]}")
                 Parser.notify(latest_record)
 
@@ -92,3 +95,4 @@ class Parser:
                                 \nСтатус уязвимости: {record[14]},\
                                 \nИсточник: {record[17]}"
         logging.debug(formatted_message)
+        BotService.notify(formatted_message)
