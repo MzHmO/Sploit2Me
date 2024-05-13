@@ -1,17 +1,14 @@
 import forms.formdef as forms
 import os
 
+
 from backend.profile.file_manager import *
 from backend.database import Database
 from flask import Flask, url_for, redirect, request, render_template, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 
 # DEPLOY CONFIG
-from config import app
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
 
 # EXTERNAL ROUTES
 app.add_url_rule('/files', methods=['GET', 'POST'], view_func=file_handling)
