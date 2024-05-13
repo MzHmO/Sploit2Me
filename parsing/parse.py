@@ -2,19 +2,16 @@ import pandas as pd
 import logging
 import requests
 import config
-from botnotify.tg import BotService
+from botnotify.tg import BotService, async_notify
+from time import sleep
 from requests.packages import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-from time import sleep
-
 
 class HttpService:
     @staticmethod
     def download(endpoint, localpath):
         try:
-            logging.debug(f"[*] Start downloading from {endpoint} to {localpath}")
+            logging.warn(f"[*] Start downloading from {endpoint} to {localpath}")
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0'
             }
@@ -23,7 +20,7 @@ class HttpService:
                 f.write(response.content)
         
         except Exception as e:
-            logging.critical(f"[-] Failed to download file from {endpoint}\n{e}")
+            logging.warn(f"[-] Failed to download file from {endpoint}\n{e}")
             
 class ExcelService:
     @staticmethod
@@ -31,7 +28,7 @@ class ExcelService:
         headers = []
         records = []
         try:
-            logging.debug(f"[*] Start reading xlsx {file}")
+            logging.warn(f"[*] Start reading xlsx {file}")
             df = pd.read_excel(file, usecols=usecols, nrows=nrows, skiprows=skiprows)
             headers = df.columns.tolist()
             records = df.values.tolist()
@@ -51,25 +48,32 @@ class Parser:
     def start(timeout, use_debug_file=False):
         while True:
             file_path = config.TESTFILEPATH if use_debug_file else config.VULNLISTPATH
-            Parser.process_file(file_path)
+            headers, records = Parser.get_bdu(file_path=file_path)
+            
+            record = Parser.find_new_vuln(records=records)
+            if (record != ""):
+                Parser.notify(record)
             sleep(timeout)
 
     @staticmethod
-    def process_file(file_path):
+    def get_bdu(file_path):
         if (file_path != config.TESTFILEPATH):
             HttpService.download(endpoint=config.URL, localpath=file_path)
-        headers, records = ExcelService.read_xlsx(file_path, skiprows=2)
+        return ExcelService.read_xlsx(file_path, skiprows=2)        
 
-        if records:
-            sorted_records = ExcelService.sort_by_column_identifier(records=records, column_id=0) # sort by column "Идентификатор"
-            latest_record = sorted_records[0]
-            local_latest_id = Parser.extract_numeric_value(latest_record[0])
 
-            if local_latest_id > Parser.latest_id:
-                Parser.latest_id = local_latest_id
-                logging.debug(f"[*] Found new vulnerability {latest_record[0]}")
-                Parser.notify(latest_record)
+    @staticmethod
+    def find_new_vuln(records):
+        sorted_records = ExcelService.sort_by_column_identifier(records=records, column_id=0) # sort by column "Идентификатор"
+        latest_record = sorted_records[0]
+        local_latest_id = Parser.extract_numeric_value(latest_record[0])
 
+        if local_latest_id > Parser.latest_id:
+            #Parser.latest_id = local_latest_id
+            logging.warn(f"[*] Found new vulnerability {latest_record[0]}")
+            return latest_record
+        return ""
+            
     @staticmethod  
     def extract_numeric_value(identifier):
         try:
@@ -78,7 +82,7 @@ class Parser:
             numeric_value = int(year + num)
             return numeric_value
         except (IndexError, ValueError) as e:
-            logging.critical(f"Error processing identifier: {identifier}. Error: {str(e)}")
+            logging.warn(f"[*] Error processing identifier: {identifier}. Error: {str(e)}")
             return None
 
     @staticmethod
@@ -94,5 +98,5 @@ class Parser:
                                 \nУровень опасности: {record[12]},\
                                 \nСтатус уязвимости: {record[14]},\
                                 \nИсточник: {record[17]}"
-        logging.debug(formatted_message)
-        BotService.notify(formatted_message)
+        #logging.warn(formatted_message)
+        async_notify(formatted_message)

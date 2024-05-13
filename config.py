@@ -10,7 +10,6 @@ class FileSystem:
         return full_path
 
 URL = "https://bdu.fstec.ru/files/documents/vullist.xlsx"
-TELEGRAM_TOKEN = "7136918933:AAE1cRDDMMsFs5IBTcBU9AtIDQk51mgOVoc"
 
 VULNLISTFILENAME = "vullist_temp.xlsx"
 VULNLISTPATH = FileSystem.getvullistpath(filename=VULNLISTFILENAME)
