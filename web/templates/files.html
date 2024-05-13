@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{username}}'s files</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='files.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body style="background-image: url({{ url_for('static', filename='bg.png') }});"
+  class="text-[#080808] bg-center bg-cover">
+  <div class="w-screen h-screen py-5 px-6">
+    <div class="w-96 grid justify-center items-center absolute gap-y-5">
+      <div class="flex justify-center">
+        <img class="" src="{{ url_for('static', filename='tglogo.png' ) }}" alt="">
+      </div>
+      <button
+        class="flex justify-between items-center text-3xl font-normal gap-x-20 hover:bg-[#E1EDF9] rounded-lg px-4 py-3 ease-in-out duration-200">
+        <span>Загрузить</span>
+        <img src="{{ url_for('static', filename='download.png' ) }}" alt="">
+      </button>
+      <button
+        class="flex justify-between items-center text-3xl font-normal gap-x-20 hover:bg-[#E1EDF9] rounded-lg px-4 py-3 ease-in-out duration-200">
+        <span>Создать проект</span>
+        <img src="{{ url_for('static', filename='plus.png' ) }}" alt="">
+      </button>
+      <hr class="border-[1.5px] border-[#0B111D] rounded-full">
+      <button
+        class="flex justify-between items-center text-3xl font-normal gap-x-20 hover:bg-[#E1EDF9] rounded-lg px-4 py-3 ease-in-out duration-200">
+        <span>Проект 1</span>
+        <img src="{{ url_for('static', filename='project.png' ) }}" alt="">
+        </svg>
+
+
+      </button>
+      <!-- Кнопки на другие проекты -->
+    </div>
+
+
+
+    <div class="w-auto h-full bg-[#F4FAFF] rounded-lg ml-96 px-10">
+      <div class="h-16">
+        <div class="h-16 float-right flex justify-center items-center gap-x-4">
+          <button class="text-blue-500 mr-4"><a href="{{ url_for('logout') }}">Выйти</a></button>
+          <button>
+            <a href="personal_page" class="h-16 float-right flex justify-center items-center gap-x-4 ">
+              <span class="flex" href="">Имя Фамилия Отчество</span>
+              <img class="flex size-12 cursor-pointer" src="{{ url_for('static', filename='photo.png' ) }}" alt="">
+            </a>
+          </button>
+
+        </div>
+      </div>
+
+
+      <hr class="-mx-10 border-[1.5px] border-[#0B111D]">
+
+      <div class="text-5xl font-light my-4">
+        <h2>Проект 1</h2>
+      </div>
+      <div>
+        {% if error %}
+        <p class="text-red-600">{{ error }}</p>
+        {% endif %}
+      </div>
+
+      <div class="main-content">
+        <div class="files-list">
+          {% for file in files %}
+          <div class="file-item">
+            <img src="file-icon.png" alt="file">
+            {{ file }}
+            <button><a href="{{ url_for('download_file', filename=file) }}">Скачать</a></button>
+            <form action="{{ url_for('delete_file', filename=file) }}" method="post">
+              <button type="submit">Удалить</button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+
+        <h2>Загрузить новые файлы</h2>
+        <form method="post" enctype="multipart/form-data">
+          <input type="file" name="file">
+          <input type="submit" value="Загрузить">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

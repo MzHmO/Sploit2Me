@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .main-content {
+    flex-grow: 5;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  
+  .files-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+  }
+  
+  .file-item img {
+    width: 50px; 
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  button, .file-item a {
+    margin-top: 5px;
+  }
+  
