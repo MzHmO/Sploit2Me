@@ -1,0 +1,227 @@
+style.css
+html, body {
+    font-family: "Roboto", sans-serif;
+    color: #080808;
+    font-weight: 400;
+}
+
+.wrapper {
+    min-height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+body {
+    background: url(../img/background.png);
+}
+
+.settings {
+    padding-top: 100px;
+}
+
+.settings__inner {
+    border: 1px solid #83a2ce;
+    border-radius: 15px;
+    background: #f4faff;
+    padding: 10px 115px 40px;
+}
+
+.settings__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.settings__logo {
+    margin-bottom: 10px;
+}
+
+.settings__title {
+    font-weight: 200;
+    font-size: 60px;
+    margin-bottom: 40px;
+}
+
+.settings__input {
+    width: 100%;
+    background: #e6eff9;
+    border-radius: 15px;
+    padding: 40px;
+    margin-bottom: 20px;
+    font-weight: 200;
+    font-size: 30px;
+}
+
+.settings__input:last-child {
+    margin-bottom: 45px;
+}
+
+.settings__input::placeholder {
+    font-weight: 200;
+    font-size: 30px;
+}
+
+.settings__input:focus{
+    border: 1px solid black;
+}
+
+.settings__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.settings__button {
+    width: 350px;
+    padding: 15px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: #cedeed;
+    font-weight: 300;
+    font-size: 30px;
+    transition: .3s;
+}
+
+.settings__button:hover {
+    background: #334664;
+    color: #fff;
+}
+
+.base {
+    padding: 20px;
+    display: flex;
+}
+
+.base__menu {
+    width: 390px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.base__logo {
+    margin-bottom: 40px;
+}
+
+.base__list {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.base__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    transition: .3s;
+}
+
+.base__item:hover {
+    opacity: 0.5;
+}
+
+.base__text {
+    font-weight: 300;
+    font-size: 30px;
+}
+
+
+.base__content {
+    width: 100%;
+    background: #f4faff;
+    border-radius: 15px;
+}
+
+.base__head {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    column-gap: 20px;
+    padding: 10px 30px;
+    border-bottom: 2px solid #0b111d;
+}
+
+.base__name {
+    font-weight: 300;
+    font-size: 30px;
+}
+
+.base__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 100px;
+}
+
+.base__chart {
+    max-width: 100%;
+}
+
+.base__charts {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.telegram__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 200px 0px;
+}
+
+.telegram__wrap {
+    width: 70%;
+    background: #f4faff;
+    border: 1px solid #83a2ce;
+    border-radius: 15px;
+    padding: 45px 115px;
+}
+
+.telegram__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 55px;
+}
+
+.telegram__input {
+    width: 100%;
+    background: #e6eff9;
+    border-radius: 15px;
+    padding: 40px;
+    margin-bottom: 20px;
+    font-weight: 200;
+    font-size: 30px;
+}
+
+.telegram__input:focus{
+    border: 1px solid black;
+}
+
+.telegram__button {
+    width: 315px;
+    background: #cedeed;
+    font-weight: 300;
+    font-size: 30px;
+    border-radius: 15px;
+    padding: 15px 0px;
+    transition: .3s;
+}
+
+.telegram__button:hover {
+    background: #334664;
+    color: #fff;
+}
