@@ -17,6 +17,7 @@ import threading
 from web.deploy import WebServer
 from parsing.parse import Parser
 from botnotify.tg import BotService
+from web.database import Database
 
 
 def start_web_server(options):
@@ -29,6 +30,9 @@ def start_bot_service(options):
 
 def start_parser(options):
     Parser.start(timeout=5, use_debug_file=options.testfile)
+
+def start_db():
+    Database.setup_db()
 
 
 if __name__ == "__main__":
@@ -55,13 +59,16 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
 
+    database_thread = threading.Thread(target=start_db)
     web_server_thread = threading.Thread(target=start_web_server, args=(options,))
-    # bot_service_thread = threading.Thread(target=start_bot_service, args=(options,))
-    # parser_thread = threading.Thread(target=start_parser, args=(options,))
+    bot_service_thread = threading.Thread(target=start_bot_service, args=(options,))
+    parser_thread = threading.Thread(target=start_parser, args=(options,))
+    database_thread.start()
     web_server_thread.start()
-    # bot_service_thread.start()
-    # parser_thread.start()
+    bot_service_thread.start()
+    parser_thread.start()
 
+    database_thread.join()
     web_server_thread.join()
-    # bot_service_thread.join()
-    # parser_thread.join()
+    bot_service_thread.join()
+    parser_thread.join()

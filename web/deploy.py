@@ -1,11 +1,5 @@
-from flask import Flask
-import os
-
-
+import logging
 from . import forms
-import os
-
-# from backend.profile.file_manager import *
 from .database import Database
 from flask import Flask, url_for, redirect, request, render_template, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
@@ -110,5 +104,6 @@ def register():
 class WebServer:
     @staticmethod
     def start(host, port, debug):
+        logging.warn(f"[*] Starting Web on {host}:{port} with debug mode in {debug}")
         app.run(host=host, port=port, debug=debug)
         
