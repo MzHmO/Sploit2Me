@@ -48,7 +48,7 @@ if __name__ == "__main__":
                         default="127.0.0.1")
     parser.add_argument("-token", action="store", help="Telegram bot token for sending messages to user's", default="")
     parser.add_argument("-port", action="store", help="From 1 to 65536 port value on which web server will be started",
-                        default=8000)
+                        default=80)
 
     options = parser.parse_args()
 

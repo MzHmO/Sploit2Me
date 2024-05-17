@@ -69,7 +69,7 @@ class Parser:
         local_latest_id = Parser.extract_numeric_value(latest_record[0])
 
         if local_latest_id > Parser.latest_id:
-            #Parser.latest_id = local_latest_id
+            #Parser.latest_id = local_latest_id # UNCOMMENT IT IN PROD
             logging.warn(f"[*] Found new vulnerability {latest_record[0]}")
             return latest_record
         return ""

@@ -1,8 +1,10 @@
 import logging
 from . import forms
 from .database import Database
+from .profile import view_profile
 from flask import Flask, url_for, redirect, request, render_template, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
+
 
 # DEPLOY CONFIG
 from config import app
@@ -14,7 +16,7 @@ login_manager.login_view = 'login'
 # EXTERNAL ROUTES
 # app.add_url_rule('/files', methods=['GET', 'POST'], view_func=file_handling)
 # app.add_url_rule('/download/<filename>', view_func=download_file)
-# app.add_url_rule('/delete/<filename>', methods=['GET', 'POST'], view_func=delete_file)
+app.add_url_rule('/profile', methods=['GET', 'POST'], view_func=view_profile)
 
 
 # INTERNAL ROUTES
@@ -26,7 +28,7 @@ def load_user(user_id):
 @app.route('/')
 def home():
      if current_user.is_authenticated:
-         return redirect(url_for('file_handling'))
+         return redirect(url_for('view_profile'))
      return redirect(url_for('login'))
 
 
@@ -38,7 +40,7 @@ def login():
         if Database.validate_login_by_username(username, password):
             user = Database.get_user_by_username(username)
             login_user(user)
-            return redirect(url_for('file_handling'))
+            return redirect(url_for('view_profile'))
         else:
             flash('Неверное имя пользователя или пароль')
 
