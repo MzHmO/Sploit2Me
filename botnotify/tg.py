@@ -61,8 +61,7 @@ class BotService:
         
         failed_chats = []
 
-        if (len(BotService.chat_ids) == 0):
-            BotService.chat_ids = set(Database.get_all_chat_ids())
+        BotService.chat_ids = set(Database.get_all_chat_ids())
 
         for chat_id in BotService.chat_ids:
             try:
