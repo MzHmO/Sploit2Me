@@ -2,6 +2,8 @@ import logging
 from . import forms
 from .database import Database
 from .cards import view_cards
+from .stats import view_stats
+from .telegram import view_telegram
 from flask import Flask, url_for, redirect, request, render_template, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 
@@ -17,7 +19,8 @@ login_manager.login_view = 'login'
 # app.add_url_rule('/files', methods=['GET', 'POST'], view_func=file_handling)
 # app.add_url_rule('/download/<filename>', view_func=download_file)
 app.add_url_rule('/cards', methods=['GET', 'POST'], view_func=view_cards)
-
+app.add_url_rule('/telegram', methods=['GET', 'POST'], view_func=view_telegram)
+app.add_url_rule('/stats', methods=['GET', 'POST'], view_func=view_stats)
 
 # INTERNAL ROUTES
 @login_manager.user_loader
