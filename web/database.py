@@ -4,7 +4,6 @@ import os
 
 DATABASE = "database.db"
 
-
 class User:
     def __init__(self, id, username, email=None):
         self.id = id
@@ -52,7 +51,7 @@ class Database:
 
     @staticmethod
     def setup_db():
-        conn = Database.Connect()
+        conn = Database.Connect(db_name=DATABASE)
         cursor = conn.cursor()
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -62,8 +61,42 @@ class Database:
             email TEXT NOT NULL
         );
         """)
+        
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS chats (
+            chatid INTEGER PRIMARY KEY,
+            username TEXT NOT NULL
+        );
+        """)
+
         conn.commit()
         conn.close()
+
+    @staticmethod
+    def add_chat(chatid, username):
+        conn = Database.Connect(db_name=DATABASE)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO chats (chatid, username) VALUES (?, ?)", (chatid, username))
+        conn.commit()
+        conn.close()
+
+    @staticmethod
+    def get_all_chat_ids():
+        conn = Database.Connect(db_name=DATABASE)
+        cursor = conn.cursor()
+        cursor.execute("SELECT chatid FROM chats")
+        chatids = [row['chatid'] for row in cursor.fetchall()]
+        conn.close()
+        return chatids
+
+    @staticmethod
+    def chat_exists(chatid):
+        conn = Database.Connect(db_name=DATABASE)
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1 FROM chats WHERE chatid = ?", (chatid,))
+        result = cursor.fetchone()
+        conn.close()
+        return result is not None
 
     @staticmethod
     def get_user_by_id(user_id):

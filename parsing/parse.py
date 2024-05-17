@@ -2,6 +2,7 @@ import pandas as pd
 import logging
 import requests
 import config
+from random import choice
 from botnotify.tg import BotService, async_notify
 from time import sleep
 from requests.packages import urllib3
@@ -60,10 +61,13 @@ class Parser:
             file_path = config.TESTFILEPATH if use_debug_file else config.VULNLISTPATH
             Parser.headers, Parser.records = Parser.get_bdu(file_path=file_path)
             
-            record = Parser.find_new_vuln(records=Parser.records)
+            if use_debug_file:
+                record = Parser.find_new_vuln(records=Parser.records, column=choice([i for i in range(0,10) if i not in [7]])) # simulate new vulns
+            else:
+                record = Parser.find_new_vuln(records=Parser.records, column=0) # sort by column "Идентификатор"
             if (record != ""):
                 Parser.notify(record)
-            sleep(timeout)
+            sleep(int(timeout))
 
     @staticmethod
     def get_bdu(file_path):
@@ -73,8 +77,8 @@ class Parser:
 
 
     @staticmethod
-    def find_new_vuln(records):
-        Parser.sorted_records = ExcelService.sort_by_column_identifier(records=records, column_id=0) # sort by column "Идентификатор"
+    def find_new_vuln(records, column):
+        Parser.sorted_records = ExcelService.sort_by_column_identifier(records=records, column_id=column)
         latest_record = Parser.sorted_records[0]
         local_latest_id = Parser.extract_numeric_value(latest_record[0])
 
@@ -97,16 +101,18 @@ class Parser:
 
     @staticmethod
     def notify(record):
-        formatted_message = f"[!] Последняя уязвимость\
-                                \nИдентификатор: {record[0]},\
-                                \nНаименование: {record[1]},\
-                                \nОписание уязвимости {record[2]},\
-                                \nВендор ПО: {record[3]},\
-                                \nНазвание ПО: {record[4]},\
-                                \nВерсия ПО: {record[5]},\
-                                \nДата выявления: {record[9]},\
-                                \nУровень опасности: {record[12]},\
-                                \nСтатус уязвимости: {record[14]},\
-                                \nИсточник: {record[17]}"
-        #logging.warn(formatted_message)
+        formatted_message = (
+        "❗️❗️❗️Последняя уязвимость❗️❗️❗️\n\n"
+            f"🪪 Идентификатор: {record[0]},\n\n"
+            f"🏷 Наименование: {record[1]},\n\n"
+            f"📋 Описание уязвимости: {record[2]},\n\n"
+            f"- Вендор ПО: {record[3]},\n\n"
+            f"- Название ПО: {record[4]},\n\n"
+            f"- Версия ПО: {record[5]},\n\n"
+            f"📆 Дата выявления: {record[9]},\n\n"
+            f"📊 Уровень опасности: {record[12]},\n\n"
+            f"✅ Статус уязвимости: {record[14]},\n\n"
+            f"📬 Источник: {record[17]}"
+        )
+        # logging.warn(formatted_message)
         async_notify(formatted_message)
