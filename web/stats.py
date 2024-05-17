@@ -23,7 +23,7 @@ def plot_png_route():
     fig, ax = plt.subplots()
     ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=200)
     ax.axis('equal')
-    plt.title('Количество уязвимостей по ПО')
+    plt.title('Наиболее уязвимое ПО')
 
     img = io.BytesIO()
     plt.savefig(img, format='png')
