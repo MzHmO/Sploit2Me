@@ -2,7 +2,7 @@ import logging
 from . import forms
 from .database import Database
 from .cards import view_cards
-from .stats import view_stats
+from .stats import view_stats, plot_png_route
 from .telegram import view_telegram
 from flask import Flask, url_for, redirect, request, render_template, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
@@ -16,11 +16,10 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # EXTERNAL ROUTES
-# app.add_url_rule('/files', methods=['GET', 'POST'], view_func=file_handling)
-# app.add_url_rule('/download/<filename>', view_func=download_file)
 app.add_url_rule('/cards', methods=['GET', 'POST'], view_func=view_cards)
 app.add_url_rule('/telegram', methods=['GET', 'POST'], view_func=view_telegram)
 app.add_url_rule('/stats', methods=['GET', 'POST'], view_func=view_stats)
+app.add_url_rule('/plot.png', methods=['GET'], view_func=plot_png_route)
 
 # INTERNAL ROUTES
 @login_manager.user_loader
@@ -74,37 +73,6 @@ def register():
             error = "Пароли не совпадают"
 
     return render_template('register.html', form=form, error=error)
-
-
-# @app.route('/profile', methods=['GET', 'POST'])
-# def profile():
-#     profile = {
-#         "name": "Имя",
-#         "surname": "Фамилия",
-#         "otchestvo": "Отчество",
-#
-#     }
-#     return render_template('profile.html', profile=profile)
-#
-#
-# @app.route('/change_password', methods=['GET', 'POST'])
-# def change_password():
-#     error = ''
-#     username = current_user.username
-#     form = forms.ChangePasswordForm()
-#     if form.is_submitted():
-#         old_password, password_1, password_2 = form.old_password.data, form.password_1.data, form.password_2.data
-#         if password_1 == password_2:
-#             message, success = Database.change_password(username, old_password, password_1)
-#             if success:
-#                 return redirect(url_for('profile'))
-#             else:
-#                 error = message
-#         else:
-#             error = "Пароли не совпадают"
-#
-#     return render_template('change_password.html', form=form, error=error)
-
 
 class WebServer:
     @staticmethod

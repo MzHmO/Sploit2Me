@@ -43,14 +43,24 @@ class ExcelService:
 
 class Parser:
     latest_id = 0
+    headers = []
+    records = []
+    sorted_records = []
+
+    @staticmethod
+    def getsystems():
+        while (len(Parser.records) == 0):
+            sleep(5)
+        column_index = 4 # Название ПО
+        return [record[column_index].split(' ')[0] for record in Parser.records]
 
     @staticmethod
     def start(timeout, use_debug_file=False):
         while True:
             file_path = config.TESTFILEPATH if use_debug_file else config.VULNLISTPATH
-            headers, records = Parser.get_bdu(file_path=file_path)
+            Parser.headers, Parser.records = Parser.get_bdu(file_path=file_path)
             
-            record = Parser.find_new_vuln(records=records)
+            record = Parser.find_new_vuln(records=Parser.records)
             if (record != ""):
                 Parser.notify(record)
             sleep(timeout)
@@ -64,8 +74,8 @@ class Parser:
 
     @staticmethod
     def find_new_vuln(records):
-        sorted_records = ExcelService.sort_by_column_identifier(records=records, column_id=0) # sort by column "Идентификатор"
-        latest_record = sorted_records[0]
+        Parser.sorted_records = ExcelService.sort_by_column_identifier(records=records, column_id=0) # sort by column "Идентификатор"
+        latest_record = Parser.sorted_records[0]
         local_latest_id = Parser.extract_numeric_value(latest_record[0])
 
         if local_latest_id > Parser.latest_id:
