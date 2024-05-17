@@ -53,14 +53,17 @@
           <div class="cards">
             <span class="cards-title">Карточки</span>
             <div class="card-wrapper">
-              <div class="card">
-                <img src="../static/img/card.png" />
-                Карточка 1
-              </div>
-              <div class="card">
-                <img src="../static/img/card.png" />
-                Карточка 2
-              </div>
+                {% for card in cards %}
+                <a href="{{ card.link }}" class="card-link">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename='img/card.png') }}" alt="Card image">
+                        <div class="card-info">
+                            <strong>Идентификатор:</strong> {{ card.identifier }}<br>
+                            <strong>Вендор ПО:</strong> {{ card.vendor }}
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
           </div>
         </div>

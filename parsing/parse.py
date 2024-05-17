@@ -65,9 +65,32 @@ class Parser:
                 record = Parser.find_new_vuln(records=Parser.records, column=choice([i for i in range(0,10) if i not in [7]])) # simulate new vulns
             else:
                 record = Parser.find_new_vuln(records=Parser.records, column=0) # sort by column "Идентификатор"
+            
             if (record != ""):
                 Parser.notify(record)
+            
             sleep(int(timeout))
+
+    @staticmethod
+    def get_card_vuln(cards_count = 10):
+        while (len(Parser.sorted_records) == 0):
+            sleep(2)
+
+        latest_records = Parser.sorted_records[:cards_count]
+        cards = []
+        for record in latest_records:
+            try:
+                link = record[17].split('\n')[0]
+            except Exception as e:
+                link = "https://bdu.fstec.ru/"
+            
+            card = {
+                'identifier': record[0],
+                'vendor': record[3],
+                'link': link
+            }
+            cards.append(card)
+        return cards
 
     @staticmethod
     def get_bdu(file_path):

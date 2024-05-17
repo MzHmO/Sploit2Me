@@ -2,6 +2,7 @@ import logging
 from config import app
 from flask import redirect, url_for, session, render_template, request
 from flask_login import login_required
+from parsing.parse import Parser
 from .database import Database
 
 @login_required
@@ -11,7 +12,8 @@ def view_cards():
             return redirect(url_for('login'))
 
         user = Database.get_user_by_id(session['_user_id'])
-        return render_template('cards.html', username=user.username)
+        cards = Parser.get_card_vuln(10)
+        return render_template('cards.html', username=user.username, cards=cards)
     except Exception as e:
         print(e)
-        return render_template('cards.html', username=user.username)
+        return render_template('cards.html', username=user.username, cards=[])

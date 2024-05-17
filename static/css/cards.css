@@ -68,14 +68,20 @@ body {
   
   .cards-title {
     padding: 5px;
-    font-size: 32px;
+    font-size: 24px;
   }
   
   .card-wrapper {
     display: flex;
     padding-top: 15px;
+    flex-wrap: wrap;
+    gap: 10px; 
   }
   
+  .card-link {
+    text-decoration: none;
+  }
+
   .card {
     background-image: url("../img/BG_card.png");
     background-size: cover;
@@ -85,13 +91,30 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 30px;
+    padding: 20px;
     margin: 5px;
-    height: 220px;
-    width: 175px;
-    white-space: nowrap;
+    height: 340px;
+    width: 200px;
+    white-space: normal;
+    overflow: visible;
+    text-align: left;
+    color: inherit;
   }
   
+  .card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .card-info {
+    font-size: 14px; 
+    line-height: 1.5;
+
+    text-overflow: ellipsis; 
+  }
+
   .content {
     margin-left: 5px;
     flex-grow: 1;
