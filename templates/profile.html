@@ -1,0 +1,51 @@
+  <!DOCTYPE html>
+<html>
+<head>
+  <title>Личный кабинет</title>
+</head>
+<body>
+  <div class="Avatar">
+    <form action="/upload-photo" method="post">
+      <input type="file" name="photo" accept="image/*">
+      <input type="submit" value="Загрузить фото">
+    </form>
+  </div>
+  <div class="main-content">
+    <h1>Личные данные</h1>
+    <form action="/update-profile" method="post">
+      <div class="line">
+        <label for="first_name">Имя</label>
+        <input type="text" name="first_name" id="first_name">
+      </div>
+      <div class="line">
+        <label for="last_name">Фамилия</label>
+        <input type="text" name="last_name" id="last_name">
+      </div>
+      <div class="line">
+        <label for="middle_name">Отчество</label>
+        <input type="text" name="middle_name" id="middle_name">
+      </div>
+      <div class="line">
+        <label for="birthdate">Дата рождения</label>
+        <input type="date" name="birthdate" id="birthdate">
+      </div>
+      <div class="line">
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email">
+      </div>
+      <div class="line">
+        <label for="phone_number">Номер телефона</label>
+        <input type="tel" name="phone_number" id="phone_number">
+      </div>
+      <div class="line">
+        <label for="password">Пароль</label>
+        <input type="password" name="password" id="password">
+      </div>
+      <div class="line">
+        <input type="submit" value="Сохранить изменения">
+      </div>
+    </form>
+    <button><a href="/changepass">Сменить пароль</a></button>
+  </div>
+</body>
+</html>

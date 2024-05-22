@@ -4,6 +4,8 @@ from .database import Database
 from .cards import view_cards
 from .stats import view_stats, plot_png_route
 from .telegram import view_telegram
+from .profile import view_profile
+from .changepass import view_changepass
 from flask import Flask, url_for, redirect, request, render_template, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 
@@ -19,6 +21,8 @@ login_manager.login_view = 'login'
 app.add_url_rule('/cards', methods=['GET', 'POST'], view_func=view_cards)
 app.add_url_rule('/telegram', methods=['GET', 'POST'], view_func=view_telegram)
 app.add_url_rule('/stats', methods=['GET', 'POST'], view_func=view_stats)
+app.add_url_rule('/profile', methods=['GET', 'POST'], view_func=view_profile)
+app.add_url_rule('/changepass', methods=['GET', 'POST'], view_func=view_changepass)
 app.add_url_rule('/plot.png', methods=['GET'], view_func=plot_png_route)
 
 # INTERNAL ROUTES
