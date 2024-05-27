@@ -184,14 +184,17 @@ class Database:
             conn = Database.Connect()
             cursor = conn.cursor()
 
-            sql = """
-            UPDATE users
-            SET password = '?'
-            WHERE username = '?';
-            """
-            cursor.execute(sql, (generate_password_hash(password), username))
+            cursor.execute(
+                """
+                UPDATE users
+                SET password = ?
+                WHERE username = ?;
+                """,
+                (generate_password_hash(password), username)
+            )
+
 
             conn.commit()
             conn.close()
-            return 'User password successfully change', True
-        return 'User password wrong', False
+            return 'Password changed successfully', True
+        return 'Wrong user password', False

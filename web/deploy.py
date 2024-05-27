@@ -4,6 +4,7 @@ from .database import Database
 from .cards import view_cards
 from .stats import view_stats, plot_png_route
 from .telegram import view_telegram
+from .changepass import change_pass
 from flask import Flask, url_for, redirect, request, render_template, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 
@@ -19,6 +20,7 @@ login_manager.login_view = 'login'
 app.add_url_rule('/cards', methods=['GET', 'POST'], view_func=view_cards)
 app.add_url_rule('/telegram', methods=['GET', 'POST'], view_func=view_telegram)
 app.add_url_rule('/stats', methods=['GET', 'POST'], view_func=view_stats)
+app.add_url_rule('/changepass', methods=['GET', 'POST'], view_func=change_pass)
 app.add_url_rule('/plot.png', methods=['GET'], view_func=plot_png_route)
 
 # INTERNAL ROUTES
@@ -30,7 +32,7 @@ def load_user(user_id):
 @app.route('/')
 def home():
      if current_user.is_authenticated:
-         return redirect(url_for('view_cards'))
+            return redirect(url_for('view_cards'))
      return redirect(url_for('login'))
 
 
