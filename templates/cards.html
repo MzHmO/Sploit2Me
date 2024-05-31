@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-    rel="stylesheet">
+          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
   <link rel="stylesheet" href="../static/css/reset.css">
   <link rel="stylesheet" href="../static/css/style.css">
   <link rel="stylesheet" href="../static/css/cards.css">
@@ -14,62 +14,62 @@
 </head>
 
 <body>
-  <div class="wrapper">
-    <main>
-      <section class="base">
-        <div class="base__menu">
-          <a href="#" class="base__logo">
-            <img src="../static/img/logo.png" alt="logo" class="base__img">
+<div class="wrapper">
+  <main>
+    <section class="base">
+      <div class="base__menu">
+        <a href="#" class="base__logo">
+          <img src="../static/img/logo.png" alt="logo" class="base__img">
+        </a>
+        <div class="base__list">
+          <a href="/cards" class="base__item">
+            <p class="base__text">Карточки</p>
+            <img src="../static/img/icon-1.svg" alt="icon" class="base__icon">
           </a>
-          <div class="base__list">
-            <a href="/cards" class="base__item">
-              <p class="base__text">Карточки</p>
-              <img src="../static/img/icon-1.svg" alt="icon" class="base__icon">
-            </a>
-            <a href="/stats" class="base__item">
-              <p class="base__text">Статистика</p>
-              <img src="../static/img/icon-2.svg" alt="icon" class="base__icon">
-            </a>
-            <a href="/telegram" class="base__item">
-              <p class="base__text">Добавить Telegram</p>
-              <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
-            </a>
-            <a href="/logout" class="base__item">
-              <p class="base__text">Выход</p>
-              <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
-            </a>
-          </div>
+          <a href="/stats" class="base__item">
+            <p class="base__text">Статистика</p>
+            <img src="../static/img/icon-2.svg" alt="icon" class="base__icon">
+          </a>
+          <a href="/telegram" class="base__item">
+            <p class="base__text">Добавить Telegram</p>
+            <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
+          </a>
+          <a href="/logout" class="base__item">
+            <p class="base__text">Выход</p>
+            <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
+          </a>
+        </div>
+      </div>
+
+      <div class="base__content">
+        <div class="base__head">
+          <a href="/profile"><p class="base__name">
+            {{username}}
+          </p></a>
+          <a href="/profile"><img src="../static/img/avatar.png" alt="avatar" class="base__avatar"></a>
         </div>
 
-        <div class="base__content">
-          <div class="base__head">
-            <p class="base__name">
-              {{username}}
-            </p>
-            <img src="../static/img/avatar.png" alt="avatar" class="base__avatar">
-          </div>
 
-
-          <div class="cards">
-            <span class="cards-title">Карточки</span>
-            <div class="card-wrapper">
-                {% for card in cards %}
-                <a href="{{ card.link }}" class="card-link">
-                    <div class="card">
-                        <img src="{{ url_for('static', filename='img/card.png') }}" alt="Card image">
-                        <div class="card-info">
-                            <strong>Идентификатор:</strong> {{ card.identifier }}<br>
-                            <strong>Вендор ПО:</strong> {{ card.vendor }}
-                        </div>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
+        <div class="cards">
+          <span class="cards-title">Карточки</span>
+          <div class="card-wrapper">
+            {% for card in cards %}
+            <a href="{{ card.link }}" class="card-link">
+              <div class="card">
+                <img src="{{ url_for('static', filename='img/card.png') }}" alt="Card image">
+                <div class="card-info">
+                  <strong>Идентификатор:</strong> {{ card.identifier }}<br>
+                  <strong>Вендор ПО:</strong> {{ card.vendor }}
+                </div>
+              </div>
+            </a>
+            {% endfor %}
           </div>
         </div>
+      </div>
 
-      </section>
-    </main>
+    </section>
+  </main>
 </body>
 
 </html>

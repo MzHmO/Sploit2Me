@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <title>Смена пароля</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
 </head>
 
-<body style="background-image: url({{ url_for('static', filename='img/background.png') }});"
+<body style="background-image: url({{ url_for('static', filename='bg.png') }});"
   class="text-[#080808] bg-center bg-cover">
   <div class="w-screen h-screen justify-center items-center flex">
     <div
@@ -15,7 +15,7 @@
         <img class="" src="{{ url_for('static', filename='welogo.png' ) }}" alt="">
       </div>
       <div class="flex justify-center text-5xl font-light">
-        <h1>Смена пароля</h1>
+        <h1>Регистрация</h1>
       </div>
       <div class="grid justify-center">
         {% if error %}
@@ -32,7 +32,7 @@
             </div>
             <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center">
               <p>
-                {{ form.password_1(size=70, placeholder="Новый пароль") }}
+                {{ form.password_1(size=70, placeholder="Пароль") }}
               </p>
             </div>
             <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center">
