@@ -46,14 +46,10 @@
               </p>
             </div>
             <div class="flex gap-x-4 justify-center items-center mt-20">
-              <div
-                class="w-1/2 h-10 bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer">
-                {{ form.submit(id="submit-btn") }}
-              </div>
-              <div
-                class="w-1/2 h-10 bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer" >
-                <button><a href="/login">Вернуться</a></button>
-              </div>
+              {{ form.submit(id="submit-btn", style="text-align: center; width: 250px; height: 40px;", class="bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer") }}
+              <a href="/login" style="text-align: center; width: 250px; height: 40px;" class="bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer">
+                Вернуться
+              </a>
             </div>
           </div>
         </form>
