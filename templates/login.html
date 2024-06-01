@@ -6,7 +6,9 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 
-<body style="background-image: url({{ url_for('static', filename='img/background.png') }});"
+<body style="
+background-image: url({{ url_for('static', filename='img/background.png') }});
+"
   class="text-[#080808] bg-center bg-cover">
   <div class="w-screen h-screen justify-center items-center flex">
     <div
@@ -41,14 +43,10 @@
             </div>
 
             <div class="flex gap-x-4 justify-center items-center mt-20">
-              <div
-                class="text-white w-1/2 h-10 bg-[#334664] hover:bg-[#597197] rounded-lg grid items-center justify-center cursor-pointer">
-                {{ form.submit(id="submit-btn") }}
-              </div>
-              <div
-                class="w-1/2 h-10 bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer">
-                <button><a href="/register">Зарегистрироваться</a></button>
-              </div>
+              {{ form.submit(id="submit-btn", style="text-align: center; width: 250px; height: 40px;", class="bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer") }}
+              <a href="/register" style="text-align: center; width: 250px; height: 40px;" class="bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer">
+                Зарегистрироваться
+              </a>
             </div>
           </div>
 
