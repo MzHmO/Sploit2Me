@@ -41,8 +41,16 @@
       </div>
       <div class="base__content">
         <div class="base__head">
-          <p class="base__name">{{username}}</p>
+          <p class="base__name" onclick="redirectToChangePass()">{{username}}</p>
           <img src="../static/img/avatar.png" alt="avatar" class="base__avatar">
+          <script>
+            function redirectToChangePass()
+            {
+                window.location.href = "/changepass";
+            }
+
+          </script>
+
         </div>
         <h1 style="font-size: 50px; text-align: center; margin-top: 50px;">Добавьте Telegram</h1>
         <div class="telegram__body">
