@@ -58,14 +58,17 @@ class Database:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            email TEXT NOT NULL
+            email TEXT NOT NULL,
+            cardsfilter TEXT NOT NULL
         );
         """)
         
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS chats (
             chatid INTEGER PRIMARY KEY,
-            username TEXT NOT NULL
+            username TEXT NOT NULL,
+            tgfilter TEXT NOT NULL,
+            enable INTEGER
         );
         """)
 
@@ -76,7 +79,8 @@ class Database:
     def add_chat(chatid, username):
         conn = Database.Connect(db_name=DATABASE)
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO chats (chatid, username) VALUES (?, ?)", (chatid, username))
+        filter = ""
+        cursor.execute("INSERT INTO chats (chatid, username, tgfilter) VALUES (?, ?, ?, ?)", (chatid, username, filter, 0))
         conn.commit()
         conn.close()
 
@@ -150,9 +154,11 @@ class Database:
         if user:
             conn.close()
             return 'Почта уже используется другим аккаунтом', False
+        
+        filter = ""
 
-        cursor.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)",
-                       (username, generate_password_hash(password), email))
+        cursor.execute("INSERT INTO users (username, password, email, cardsfilter) VALUES (?, ?, ?, ?)",
+                       (username, generate_password_hash(password), email, filter))
 
         conn.commit()
         conn.close()

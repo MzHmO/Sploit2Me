@@ -110,6 +110,7 @@ body {
 
 .base__menu {
     width: 390px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;

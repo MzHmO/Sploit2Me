@@ -53,6 +53,7 @@ class Parser:
         while (len(Parser.records) == 0):
             sleep(5)
         column_index = 4 # Название ПО
+
         return [record[column_index].split(' ')[0] for record in Parser.records]
 
     @staticmethod
