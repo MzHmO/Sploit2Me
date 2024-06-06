@@ -68,22 +68,23 @@
         <div class="telegram__body">
           <div class="telegram__wrap">
             <div class="telegram__form">
-              <input type="text" class="telegram__input" placeholder="Логин Telegram (@Michaelzhm)">
-
-
-              <select>
-                <option selected value="none">Выберите фильтр</option>
-                <option value="linux">Linux</option>
-                <option value="windows">Windows</option>
-                <option value="opensuse">OpenSuSe</option>
-              </select>
-
-              <div style="display: flex; justify-content: space-between; margin-top: 100px;">
-                <p class="bot__button"><a href="https://t.me/Sploit2Me_bot">Наш бот</a></p>
-                <button type="submit" class="telegram__button">Добавить</button>
-              </div>
-
-            </div>
+              <form method="POST" action="">
+                  <input type="text" name="telegram_login" class="telegram__input" placeholder="Логин Telegram (@Michaelzhm)">
+          
+                  <input list="filters" name="filter_value" class="telegram__input" placeholder="Выберите или введите фильтр">
+                  <datalist id="filters" class="telegram__form">
+                      <option value="*">
+                      <option value="Linux">
+                      <option value="Windows">
+                      <option value="OpenSuSe">
+                  </datalist>
+          
+                  <div style="display: flex; justify-content: space-between; margin-top: 100px;">
+                      <p class="bot__button"><a href="https://t.me/Sploit2Me_bot">Наш бот</a></p>
+                      <button type="submit" class="telegram__button">Добавить</button>
+                  </div>
+              </form>
+          </div>          
           </div>
         </div>
       </div>

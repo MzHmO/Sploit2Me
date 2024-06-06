@@ -1,6 +1,7 @@
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import logging
 
 DATABASE = "database.db"
 
@@ -80,7 +81,7 @@ class Database:
         conn = Database.Connect(db_name=DATABASE)
         cursor = conn.cursor()
         filter = ""
-        cursor.execute("INSERT INTO chats (chatid, username, tgfilter) VALUES (?, ?, ?, ?)", (chatid, username, filter, 0))
+        cursor.execute("INSERT INTO chats (chatid, username, tgfilter, enable) VALUES (?, ?, ?, ?)", (chatid, username, filter, 0))
         conn.commit()
         conn.close()
 
@@ -101,6 +102,28 @@ class Database:
         result = cursor.fetchone()
         conn.close()
         return result is not None
+
+    @staticmethod
+    def apply_tg_filter(username, filter_value):
+        conn = Database.Connect(db_name=DATABASE)
+
+        try:
+            if (username[0] == "@"):
+                username = username[1:]
+            cursor = conn.cursor()
+            cursor.execute("""
+                UPDATE chats 
+                SET tgfilter = ?, enable = 1 
+                WHERE username = ?;
+            """, (filter_value, username))
+            conn.commit()
+            conn.close()
+        except sqlite3.Error as e:
+            logging.error(f"Database error: {e}")
+        except Exception as e:
+            logging.error(f"Exception in check_and_send_message: {e}")
+        finally:
+            conn.close()
 
     @staticmethod
     def get_user_by_id(user_id):

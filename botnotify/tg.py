@@ -11,7 +11,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
     chat_id = update.effective_chat.id
-    username = user.username
+    username = user.username.lower()
 
     logging.warning(f"[*] New user {chat_id}")
 
@@ -65,11 +65,19 @@ class BotService:
 
         for chat_id in BotService.chat_ids:
             try:
-                await bot.send_message(chat_id=chat_id, text=message)
+                conn = Database.Connect()
+                cursor = conn.cursor()
+                cursor.execute("SELECT enable, tgfilter FROM chats WHERE chatid = ?", (chat_id,))
+                result = cursor.fetchone()
+                if result and result['enable'] == 1:
+                    tgfilter = result['tgfilter'].lower() 
+                    if tgfilter in message.lower() or tgfilter == "" or tgfilter == "*": 
+                        await bot.send_message(chat_id=chat_id, text=message)
             except Exception as e:
-                #logging.critical(f"[*] Could not send message to {chat_id}: {str(e)}")
-                #failed_chats.append(chat_id)
-                continue
+                pass
+            finally:
+                conn.close()
+
 
 def async_notify(message):
     asyncio.run(BotService.notify(message))

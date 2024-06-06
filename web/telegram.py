@@ -16,6 +16,7 @@ def view_telegram():
             telegram_login = request.form.get("telegram_login")
             filter_value = request.form.get("filter_value")
             logging.warn(f"[+] New telegram account {telegram_login} with filter {filter_value}")
+            Database.apply_tg_filter(username=telegram_login.lower(), filter_value=filter_value.lower())
 
         return render_template('telegram.html', username=user.username)
     except Exception as e:
