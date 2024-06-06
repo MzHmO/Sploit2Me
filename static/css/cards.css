@@ -128,3 +128,64 @@ body {
     border-radius: 20px;
     margin: 10px;
   }
+  .pagination {
+    margin-top: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.page-link {
+    margin: 3px;
+    padding: 3px 10px;
+    border: 1px solid #6aaef6;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #5fa4ed;
+    background-color: #f0f8ff;
+}
+
+.page-link.active {
+    font-weight: bold;
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.page-link:hover {
+    background-color: #027bfc;
+    color: #fff;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.card {
+    background-color: #e0f7ff;
+    border: 1px solid #57a0ed;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.card img {
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.card p.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

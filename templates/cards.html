@@ -76,13 +76,28 @@
                         <img src="{{ url_for('static', filename='img/card.png') }}" alt="Card image">
                         <div class="card-info">
                             <strong>Идентификатор:</strong> {{ card.identifier }}<br>
-                            <strong>Вендор ПО:</strong> {{ card.vendor }}
+                            <strong>Вендор ПО:</strong> {{ card.vendor }} <br>
+                            <strong>ПО:</strong> {{ card.software }}
                         </div>
                     </div>
                 </a>
                 {% endfor %}
             </div>
           </div>
+
+          <div class="pagination">
+            {% if current_page > 1 %}
+            <a href="{{ url_for('view_cards', page=current_page-1) }}" class="page-link">&laquo; Предыдущая</a>
+            {% endif %}
+            {% for page in range(1, total_pages + 1) %}
+            <a href="{{ url_for('view_cards', page=page) }}" class="page-link {% if page == current_page %}active{% endif %}">{{ page }}</a>
+            {% endfor %}
+            {% if current_page < total_pages %}
+            <a href="{{ url_for('view_cards', page=current_page+1) }}" class="page-link">Следующая &raquo;</a>
+            {% endif %}
+          </div>
+
+
         </div>
 
       </section>

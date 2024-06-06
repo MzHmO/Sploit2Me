@@ -72,11 +72,12 @@ class Parser:
             sleep(int(timeout))
 
     @staticmethod
-    def get_card_vuln(cards_count = 10):
+    def get_card_vuln(cards_count = 0):
         while (len(Parser.sorted_records) == 0):
             sleep(2)
 
-        latest_records = Parser.sorted_records[:cards_count]
+        latest_records = Parser.sorted_records if cards_count == 0 else Parser.sorted_records[:cards_count]
+
         cards = []
         for record in latest_records:
             try:
@@ -84,9 +85,16 @@ class Parser:
             except Exception as e:
                 link = "https://bdu.fstec.ru/"
             
+            if len(record[3]) > 30:
+                record[3] = record[3][:30] + "..."
+
+            if len(record[4]) > 30:
+                record[4] = record[4][:30] + "..."
+
             card = {
                 'identifier': record[0],
                 'vendor': record[3],
+                'software': record[4],
                 'link': link
             }
             cards.append(card)
