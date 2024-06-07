@@ -16,8 +16,7 @@ def view_cards():
         page = request.args.get('page', 1, type=int)
         per_page = 12
 
-        # all_cards = Parser.get_card_vuln()
-        all_cards = list(range(100))
+        all_cards = Parser.get_card_vuln()
         total_cards = len(all_cards)
         total_pages = (total_cards + per_page - 1) // per_page
 
