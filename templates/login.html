@@ -31,14 +31,14 @@ background-image: url({{ url_for('static', filename='img/background.png') }});
       <div class="grid items-center">
         <form method="post">
           <div class="grid gap-4 items-center justify-center">
-            <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center">
+            <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center" style="background: #E6EFF9;">
               <p>
-                {{ form.username(size=70, placeholder="Имя") }}
+                {{ form.username(size=70, placeholder="Имя", style="background: #E6EFF9;") }}
               </p>
             </div>
             <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center">
               <p>
-                {{ form.password(size=70, placeholder="Пароль") }}
+                {{ form.password(size=70, placeholder="Пароль", style="background: #E6EFF9;") }}
               </p>
             </div>
 
