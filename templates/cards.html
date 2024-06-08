@@ -11,6 +11,13 @@
   <link rel="stylesheet" href="../static/css/style.css">
   <link rel="stylesheet" href="../static/css/cards.css">
   <title>Sploit2Me</title>
+  <style>
+    .filter-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+  </style>
 </head>
 
 <body>
@@ -64,6 +71,17 @@
           }
         </script>
 
+        <div class="filter-container">
+          <form id="filter-form" action="/cards" method="POST">
+            <input list="filters" name="filter_value" class="telegram__input" placeholder="Фильтр">
+              <datalist id="filters" class="telegram__form">
+                <option value="*">
+                <option value="Linux">
+                <option value="Windows">
+                <option value="OpenSuSe">
+              </datalist>
+          </form>
+        </div>       
 
         <div class="cards">
           <span class="cards-title">Карточки</span>

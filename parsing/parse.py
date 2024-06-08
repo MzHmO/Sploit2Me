@@ -96,7 +96,8 @@ class Parser:
                 'identifier': record[0],
                 'vendor': record[3],
                 'software': record[4],
-                'link': link
+                'link': link,
+                'all': record
             }
             cards.append(card)
         return cards

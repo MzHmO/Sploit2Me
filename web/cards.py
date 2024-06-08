@@ -17,6 +17,16 @@ def view_cards():
         per_page = 12
 
         all_cards = Parser.get_card_vuln()
+        
+        filter_value = request.form.get('filter_value')
+        
+        if filter_value:
+            filter_value = filter_value.lower()
+            all_cards = [
+                card for card in all_cards 
+                if any(filter_value in str(record_value).lower() for i, record_value in enumerate(card['all']) if i != 17)
+            ]
+
         total_cards = len(all_cards)
         total_pages = (total_cards + per_page - 1) // per_page
 
@@ -26,7 +36,7 @@ def view_cards():
         cards = all_cards[start:end]
 
         if page > total_pages or page < 1:
-            render_template('cards.html', username=user.username, cards=cards, total_pages=total_pages, current_page=1)
+            return render_template('cards.html', username=user.username, cards=[], total_pages=total_pages, current_page=1)
 
         return render_template('cards.html', username=user.username, cards=cards, total_pages=total_pages, current_page=page)
     except Exception as e:
