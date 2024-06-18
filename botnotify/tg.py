@@ -1,18 +1,25 @@
 import logging
+import asyncio
+from web.database import Database 
 from telegram import Update, Bot
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from telegram import ForceReply
-import asyncio
+
 
 # COMMAND HANDLERS
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
-    logging.warn(f"[*] New user {update.effective_chat.id}")
-    BotService.chat_ids.add(update.effective_chat.id)
+    chat_id = update.effective_chat.id
+    username = user.username.lower()
+
+    logging.warning(f"[*] New user {chat_id}")
+
+    if not Database.chat_exists(chat_id):
+        Database.add_chat(chat_id, username)
+
     await update.message.reply_html(
-        rf"Hi {user.mention_html()}!",
-        reply_markup=ForceReply(selective=True),
+        rf"Hi {user.mention_html()}!"
     )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -53,13 +60,24 @@ class BotService:
             return
         
         failed_chats = []
+
+        BotService.chat_ids = set(Database.get_all_chat_ids())
+
         for chat_id in BotService.chat_ids:
             try:
-                await bot.send_message(chat_id=chat_id, text=message)
+                conn = Database.Connect()
+                cursor = conn.cursor()
+                cursor.execute("SELECT enable, tgfilter FROM chats WHERE chatid = ?", (chat_id,))
+                result = cursor.fetchone()
+                if result and result['enable'] == 1:
+                    tgfilter = result['tgfilter'].lower() 
+                    if tgfilter in message.lower() or tgfilter == "" or tgfilter == "*": 
+                        await bot.send_message(chat_id=chat_id, text=message)
             except Exception as e:
-                #logging.critical(f"[*] Could not send message to {chat_id}: {str(e)}")
-                #failed_chats.append(chat_id)
-                continue
+                pass
+            finally:
+                conn.close()
+
 
 def async_notify(message):
     asyncio.run(BotService.notify(message))

@@ -1,42 +1,61 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/reset.css">
-    <link rel="stylesheet" href="static/css/style.css">
-    <title>Смена пароля</title>
+  <title>Смена пароля</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
-<body>
-    <div class="wrapper">
-        <main>
-            <section class="settings">
-                <div class="container">
-                    <div class="settings__inner">
-                        <div class="settings__head">
-                            <a href="#" class="settings__logo">
-                                <img src="static/img/logo.png" alt="logo">
-                            </a>
-                            <h1 class="settings__title">Смена пароля</h1>
-                        </div>
-                        <form class="settings__form">
-                            <input type="password" class="settings__input" placeholder="Старый пароль">
-                            <input type="password" class="settings__input" placeholder="Новый пароль">
-                            <input type="password" class="settings__input" placeholder="Новый пароль">
-                        </form>
-                        <div class="settings__buttons">
-                            <a href="#" class="settings__button">
-                                Отмена
-                            </a>
-                            <a href="#" class="settings__button">
-                                Подтвердить
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+
+<body style="background-image: url({{ url_for('static', filename='img/background.png') }});"
+  class="text-[#080808] bg-center bg-cover">
+  <div class="w-screen h-screen justify-center items-center flex">
+    <div
+      class="h-[45rem] w-[60rem] bg-white rounded-lg border-[1px] border-[#83A2CE] justify-center grid grid-rows-[15%_10%_auto_75%] py-4">
+      <div class="flex justify-center">
+        <img class="" src="{{ url_for('static', filename='welogo.png' ) }}" alt="">
+      </div>
+      <div class="flex justify-center text-5xl font-light">
+        <h1>Смена пароля</h1>
+      </div>
+      <div class="grid justify-center">
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+      </div>
+      <div class="grid items-center">
+        <form method="post">
+          <div class="grid gap-4 items-center justify-center">
+            <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center">
+              <p>
+                {{ form.old_password(size=70, placeholder="Старый пароль", style="background: #E6EFF9;) }}
+              </p>
+            </div>
+            <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center">
+              <p>
+                {{ form.password_1(size=70, placeholder="Новый пароль", style="background: #E6EFF9;) }}
+              </p>
+            </div>
+            <div class="grid w-full h-20 bg-[#E6EFF9] rounded-lg px-4 items-center">
+              <p>
+                {{ form.password_2(size=70, placeholder="Повтор пароля", style="background: #E6EFF9;) }}
+              </p>
+            </div>
+            <div class="flex gap-x-4 justify-center items-center mt-20">
+              <div
+                class="w-1/2 h-10 bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer">
+                {{ form.submit(id="submit-btn") }}
+              </div>
+              <div
+                class="w-1/2 h-10 bg-[#CEDEED] hover:bg-[#b7c9d8] rounded-lg grid items-center justify-center cursor-pointer" >
+                <button><a href="/cards">Вернуться</a></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
+
 </body>
+
 </html>

@@ -10,6 +10,22 @@
     <link rel="stylesheet" href="../static/css/reset.css">
     <link rel="stylesheet" href="../static/css/style.css">
     <title>Sploit2Me</title>
+    <style>
+        .stats__wrap {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stats__form__1 {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .stats__form__2 {
+            flex: 1;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,24 +51,43 @@
                         </a>
                         <a href="/logout" class="base__item">
                             <p class="base__text">Выход</p>
-                            <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
+                            <img src="../static/img/icon-4.svg" alt="icon" class="base__icon">
                         </a>
                     </div>
                 </div>
+                <style>
+                    .base__name {
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .base__name:hover {
+                        background-color: #f0f0f0;
+                    }
+                </style>
+
                 <div class="base__content">
                     <div class="base__head">
-                        <p class="base__name">{{username}}</p>
+                        <p class="base__name" onclick="redirectToChangePass()">{{username}}</p>
                         <img src="../static/img/avatar.png" alt="avatar" class="base__avatar">
                     </div>
+
+                    <script>
+                        function redirectToChangePass() {
+                            window.location.href = "/changepass";
+                        }
+                    </script>
+
                     <div class="stats__body">
                         <div class="stats__wrap">
                             <div class="stats__form__1">
-                            </div>
                                 <img src="{{ url_for('plot_png_route') }}" alt="Круговая диаграмма">
-                            <div class="stats__form__2">
                             </div>
-
+                            <div class="stats__form__2">
+                                <img src="{{ url_for('plot_bar_route') }}" alt="Столбчатая диаграмма">
+                            </div>
                             <div class="stats__form__3">
+
                             </div>
                         </div>
                     </div>

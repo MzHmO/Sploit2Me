@@ -1,9 +1,9 @@
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import logging
 
 DATABASE = "database.db"
-
 
 class User:
     def __init__(self, id, username, email=None):
@@ -52,18 +52,78 @@ class Database:
 
     @staticmethod
     def setup_db():
-        conn = Database.Connect()
+        conn = Database.Connect(db_name=DATABASE)
         cursor = conn.cursor()
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            email TEXT NOT NULL
+            email TEXT NOT NULL,
+            cardsfilter TEXT NOT NULL
         );
         """)
+        
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS chats (
+            chatid INTEGER PRIMARY KEY,
+            username TEXT NOT NULL,
+            tgfilter TEXT NOT NULL,
+            enable INTEGER
+        );
+        """)
+
         conn.commit()
         conn.close()
+
+    @staticmethod
+    def add_chat(chatid, username):
+        conn = Database.Connect(db_name=DATABASE)
+        cursor = conn.cursor()
+        filter = ""
+        cursor.execute("INSERT INTO chats (chatid, username, tgfilter, enable) VALUES (?, ?, ?, ?)", (chatid, username, filter, 0))
+        conn.commit()
+        conn.close()
+
+    @staticmethod
+    def get_all_chat_ids():
+        conn = Database.Connect(db_name=DATABASE)
+        cursor = conn.cursor()
+        cursor.execute("SELECT chatid FROM chats")
+        chatids = [row['chatid'] for row in cursor.fetchall()]
+        conn.close()
+        return chatids
+
+    @staticmethod
+    def chat_exists(chatid):
+        conn = Database.Connect(db_name=DATABASE)
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1 FROM chats WHERE chatid = ?", (chatid,))
+        result = cursor.fetchone()
+        conn.close()
+        return result is not None
+
+    @staticmethod
+    def apply_tg_filter(username, filter_value):
+        conn = Database.Connect(db_name=DATABASE)
+
+        try:
+            if (username[0] == "@"):
+                username = username[1:]
+            cursor = conn.cursor()
+            cursor.execute("""
+                UPDATE chats 
+                SET tgfilter = ?, enable = 1 
+                WHERE username = ?;
+            """, (filter_value, username))
+            conn.commit()
+            conn.close()
+        except sqlite3.Error as e:
+            logging.error(f"Database error: {e}")
+        except Exception as e:
+            logging.error(f"Exception in check_and_send_message: {e}")
+        finally:
+            conn.close()
 
     @staticmethod
     def get_user_by_id(user_id):
@@ -117,9 +177,11 @@ class Database:
         if user:
             conn.close()
             return 'Почта уже используется другим аккаунтом', False
+        
+        filter = ""
 
-        cursor.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)",
-                       (username, generate_password_hash(password), email))
+        cursor.execute("INSERT INTO users (username, password, email, cardsfilter) VALUES (?, ?, ?, ?)",
+                       (username, generate_password_hash(password), email, filter))
 
         conn.commit()
         conn.close()
@@ -151,14 +213,17 @@ class Database:
             conn = Database.Connect()
             cursor = conn.cursor()
 
-            sql = """
-            UPDATE users
-            SET password = '?'
-            WHERE username = '?';
-            """
-            cursor.execute(sql, (generate_password_hash(password), username))
+            cursor.execute(
+                """
+                UPDATE users
+                SET password = ?
+                WHERE username = ?;
+                """,
+                (generate_password_hash(password), username)
+            )
+
 
             conn.commit()
             conn.close()
-            return 'User password successfully change', True
-        return 'User password wrong', False
+            return 'Password changed successfully', True
+        return 'Wrong user password', False

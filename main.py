@@ -29,7 +29,7 @@ def start_bot_service(options):
 
 
 def start_parser(options):
-    Parser.start(timeout=5, use_debug_file=options.testfile)
+    Parser.start(timeout=options.timeout, use_debug_file=options.testfile)
 
 def start_db():
     Database.setup_db()
@@ -49,6 +49,7 @@ if __name__ == "__main__":
     parser.add_argument("-token", action="store", help="Telegram bot token for sending messages to user's", default="")
     parser.add_argument("-port", action="store", help="From 1 to 65536 port value on which web server will be started",
                         default=80)
+    parser.add_argument("-timeout", action="store", help="Timeout in seconds to check updates of the vulns", default=10)
 
     options = parser.parse_args()
 
@@ -63,6 +64,7 @@ if __name__ == "__main__":
     web_server_thread = threading.Thread(target=start_web_server, args=(options,))
     bot_service_thread = threading.Thread(target=start_bot_service, args=(options,))
     parser_thread = threading.Thread(target=start_parser, args=(options,))
+    
     database_thread.start()
     web_server_thread.start()
     bot_service_thread.start()

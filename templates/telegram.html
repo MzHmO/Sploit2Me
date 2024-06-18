@@ -2,61 +2,95 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/reset.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <title>Sploit2Me</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/reset.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <title>Sploit2Me</title>
 </head>
 
 <body>
-    <div class="wrapper">
-        <main>
-            <section class="base">
-                <div class="base__menu">
-                    <a href="#" class="base__logo">
-                        <img src="../static/img/logo.png" alt="logo" class="base__img">
-                    </a>
-                    <div class="base__list">
-                        <a href="/cards" class="base__item">
-                            <p class="base__text">Карточки</p>
-                            <img src="../static/img/icon-1.svg" alt="icon" class="base__icon">
-                        </a>
-                        <a href="/stats" class="base__item">
-                            <p class="base__text">Статистика</p>
-                            <img src="../static/img/icon-2.svg" alt="icon" class="base__icon">
-                        </a>
-                        <a href="/telegram" class="base__item">
-                            <p class="base__text">Добавить Telegram</p>
-                            <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
-                        </a>
-                        <a href="/logout" class="base__item">
-                            <p class="base__text">Выход</p>
-                            <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
-                        </a>
-                    </div>
-                </div>
-                <div class="base__content">
-                    <div class="base__head">
-                        <p class="base__name">{{username}}</p>
-                        <img src="../static/img/avatar.png" alt="avatar" class="base__avatar">
-                    </div>
-                    <div class="telegram__body">
-                        <div class="telegram__wrap">
-                            <div class="telegram__form">
-                                <input type="text" class="telegram__input" placeholder="Логин Telegram (@Michaelzhm)">
-                                <input type="text" class="telegram__input" placeholder="Фильтр (Linux)">
-                                <button type="submit" class="telegram__button">Добавить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+<div class="wrapper">
+  <main>
+    <section class="base">
+      <div class="base__menu">
+        <a href="#" class="base__logo">
+          <img src="../static/img/logo.png" alt="logo" class="base__img">
+        </a>
+        <div class="base__list">
+          <a href="/cards" class="base__item">
+            <p class="base__text">Карточки</p>
+            <img src="../static/img/icon-1.svg" alt="icon" class="base__icon">
+          </a>
+          <a href="/stats" class="base__item">
+            <p class="base__text">Статистика</p>
+            <img src="../static/img/icon-2.svg" alt="icon" class="base__icon">
+          </a>
+          <a href="/telegram" class="base__item">
+            <p class="base__text">Добавить Telegram</p>
+            <img src="../static/img/icon-3.svg" alt="icon" class="base__icon">
+          </a>
+          <a href="/logout" class="base__item">
+            <p class="base__text">Выход</p>
+            <img src="../static/img/icon-4.svg" alt="icon" class="base__icon">
+          </a>
+        </div>
+      </div>
+
+      <style>
+        .base__name {
+          cursor: pointer; 
+          transition: background-color 0.3s ease; 
+        }
+      
+        .base__name:hover {
+          background-color: #f0f0f0; 
+        }
+      </style>
+      
+      <div class="base__content">
+        <div class="base__head">
+          <p class="base__name" onclick="redirectToChangePass()">{{username}}</p>
+          <img src="../static/img/avatar.png" alt="avatar" class="base__avatar">
+          <script>
+            function redirectToChangePass()
+            {
+                window.location.href = "/changepass";
+            }
+
+          </script>
+
+        </div>
+        <h1 style="font-size: 50px; text-align: center; margin-top: 50px;">Добавьте Telegram</h1>
+        <div class="telegram__body">
+          <div class="telegram__wrap">
+            <div class="telegram__form">
+              <form method="POST" action="">
+                  <input type="text" name="telegram_login" class="telegram__input" placeholder="Логин Telegram (@Michaelzhm)">
+          
+                  <input list="filters" name="filter_value" class="telegram__input" placeholder="Выберите или введите фильтр">
+                  <datalist id="filters" class="telegram__form">
+                      <option value="*">
+                      <option value="Linux">
+                      <option value="Windows">
+                      <option value="OpenSuSe">
+                  </datalist>
+          
+                  <div style="display: flex; justify-content: space-between; margin-top: 100px;">
+                      <p class="bot__button"><a href="https://t.me/Sploit2Me_bot">Наш бот</a></p>
+                      <button type="submit" class="telegram__button">Добавить</button>
+                  </div>
+              </form>
+          </div>          
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
 </body>
 
 </html>

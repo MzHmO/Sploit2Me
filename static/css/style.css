@@ -19,6 +19,11 @@ html, body {
 
 body {
     background: url(../img/background.png);
+    object-fit: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url({{ url_for('static', filename='img/background.png') }});
 }
 
 
@@ -105,6 +110,7 @@ body {
 
 .base__menu {
     width: 390px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -141,7 +147,7 @@ body {
 
 .base__content {
     width: 100%;
-    background: #f4faff;
+    background: white;
     border-radius: 15px;
 }
 
@@ -176,11 +182,13 @@ body {
     gap: 60px;
 }
 
+.bot__body,
 .telegram__body {
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 200px 0px;
+    padding: 50px 0px;
 }
 
 .telegram__wrap {
@@ -192,6 +200,7 @@ body {
 }
 
 .telegram__form {
+    width: 80%
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -212,8 +221,10 @@ body {
     border: 1px solid black;
 }
 
+.bot__button,
 .telegram__button {
     width: 315px;
+    text-align: center;
     background: #cedeed;
     font-weight: 300;
     font-size: 30px;
@@ -222,7 +233,36 @@ body {
     transition: .3s;
 }
 
+.bot__button:hover,
 .telegram__button:hover {
     background: #334664;
     color: #fff;
+}
+
+
+.bot__wrap {
+    width: 18%;
+    background: #f4faff;
+    border: 1px solid #83a2ce;
+    border-radius: 15px;
+    padding: 30px 40px;
+}
+
+select {
+  background: #e6eff9;
+  appearance: none;
+  outline: 0;
+  cursor: pointer;
+  font-weight: 200;
+  font-size: 30px;
+  border-radius: 15px;
+  padding: 40px;
+  transition: .3s;
+  width: 100%;
+      opacity: 0.5;
+}
+
+
+select:focus{
+    border: 1px solid black;
 }
